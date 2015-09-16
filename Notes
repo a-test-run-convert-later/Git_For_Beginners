@@ -270,30 +270,51 @@ Remove untracked file from working directory
 
 Video 08 Ignoring files
 =======================
+* git notices when a new file is added to the working directory and adds it to the list of untracked files
+* learn how to have git ignore files we arent interested in been versioned
+* special file - .gitignore - in the root directory of the project ie project/.ignore
+* a set of rules for git to use to know which files to use for commits and which ones to ignore
+* just enter file name
+* very basic regular expressions - * ? [aeiou] [0-9] 
+* negate expression with ! dont ignore
+* ignore all files in a directory with a trailing slash ie assets/videos/
+* comments lines begin with #, blank lines will be skipped
+* user needs to create and edit file directly
+* want to commit .gitignore file
 
+ideas on what is ignore
+-----------------------
+* compiled source code
+* packages and compressed files
+* logs and databases
+* operating system generated files
+* user-uploaded assets (images,pdfs, videos)
+* https://help.github.com/articles/ignoring-files  | overview article
+* http://github.com/github/gitignore/              | specific languages + operating systems
 
-Video 09 Navigating the Commit Tree
-===================================
+globally ignoring files
+-----------------------
+* ignore files in all repositories
+* settings not tracked in repository
+* user specific instead of repository specific
+* git config --global core.excludesfile ~/.gitignore_global
 
+ignore files it is already tracking - after the fact
+----------------------------------------------------
+* ignore will not ignore a file that was already tracked before a rule was added to the .gitignore file telling it 
 
-Video 10 Branching
-==================
+that it ought ignore it, git will still track, file needs to be untracked
+* plus files want to ignore changes to that file
+* git rm --cached <filename>   | remove from the staging index, not the repostory, will now be untracked, still in 
 
+working directory
 
-Video 11 Merging Branches
-=========================
+ignoring tracked files
+----------------------
+* git does not track empty directories
+* git designed to be a file tracking system and the content in those files
+* tracks the directories it takes to get to files
+* ignores directories with no files
+* if want to track an empty directory it must have a small file. convention create a file .gitkeep doesnt even 
 
-
-Video 12 Stashing Changes
-=========================
-
-
-Video 13 Remotes
-================
-
-
-Video 14 Tools and Next Steps
-=============================
-
-
-
+have to have content ie touch assets/pdfs/.gitkeep
