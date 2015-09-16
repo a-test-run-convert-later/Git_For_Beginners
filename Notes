@@ -1,0 +1,299 @@
+Git Tutorial for Beginners
+***************************
+Playlist https://www.youtube.com/playlist?list=PLOJrc9IhPiwUxmNXE4371hmdouVKIeoLV
+
+Video 01 What is git - Introduction
+===================================
+* covers fundamentals for source code management
+* keeps track of changes - especially text changes
+* version control system (vcs)
+* source code management (scm) above almost synmous
+
+History
+-------
+* source code control system (sccs) - 1972 closed source, free with unix - didnt save file versions but saves a snapshot of what the changes were, only work with individual file at a time
+* revision control system (rcs) - 1982, open source, kept most recent version but applied changed snapshots to go back in time, only work with individual file at a time
+* concurrent versions system (cvs) - 1986 to 1990, open source, can work with sets of files, store in repository and more than one user can work on same file at same time
+* apache subversion (svn) - 2000, open source, allowed saving of non text files, added watching directory as a whole, snapshot of directory not just files, transactional commit ( all changes or not at all)
+* bitkeeper SCM - 2000, closed source, proprietary, distributed version control, community version was free, linux  used it
+* Git - April 2005, created linux torvalds, replacement for bitkeeper to manage linux kernel source code, 
+	- distributed version control
+	- open source and free software
+	- compatible with unix like systems and windows
+	- faster than other scm's (100x in some cases)
+	- better safeguards against data corruption
+* git is a hit, explosion in popularity, no official stats, github launched in 2008 to host git repositories
+
+Distributed Version Control
+---------------------------
+* central code repository model - one central place to store master copy of the code, checkout a copy and work with it and submit changes back to central repository, others also do this, must keep update with the master
+* distributed version control - different users (or teams) maintain their own repositories, instead of working from a central repository
+	- changes are stored as "change sets" or "patches" - track changes not versions of the document
+	- different from cvs and svn, which track versions
+	- change sets can be exchanged between repositories - "merge in change sets" or "apply patches"
+* no single master repository; just many working copies. each with their own combination of change sets
+* by convention do designate a repository as a master repository. not built into git
+
+Distributed Version Control : Advantages
+----------------------------------------
+* no need to communicate with a central server, faster, no network access required, no single point of failure
+* encourages participation and forking of projects, developers can work independently, submit change sets for inclusion or rejection
+* important part of the git architecture you need to keep in mind
+* no central repository all repository are considered equal
+
+Who should use git
+-------------------
+* anyone wanting to track edits - especially text files
+	- review a history log of changes made
+	- view differences between versions
+	- retrieve old versions
+* anyone needing to share changes with collaborators
+* anyone not afraid of command-line tools
+* programmers and developers
+* not as useful for tracking non-text files
+	- images, movies, music, fonts
+	- cant see differences between
+	- word processing files, spreadsheets, pdfs
+
+Video 02 How to install git
+===========================
+
+
+Video 03 Getting Started
+========================
+Initializing a repository
+-------------------------
+* git init    get everything necessary to start tracking ready
+* ensure inside directory that will have a repository
+* no matter how deeply nested they are git will watch for them
+* creates .git sub diretory - git workspace where git does eveything its going to do
+* to remove version control from a project simply remove .git directory
+* as a rule leave alone, possible edit config file but only for project level configuration
+* git add .   (. short for this directory)
+
+Basic workflow
+--------------
+* make changes 
+* add changes
+* commit changes to the repository with a message
+
+Best Practice for writing commit messages
+-----------------------------------------
+* meaningful messages - good descriptive messages
+* single short-line summary (less than 50 characters)
+* optionally followed by a blank line and a more complete description
+* the larger the number and importance of the changes the need for longer description
+* easier to use a text editor to make multi line messages
+* keep each line to less than 72 characters
+* write commit messages in present tense, not past tense
+* bullet points are usually asterisks or hyphens
+* can add "ticket tracking numbers" from bugs of support requests
+* can develop shorthand for organisation - conventions
+* be clear and descriptive
+* problem was and what the solution was
+
+The log : Where the commit messages show up
+-------------------------------------------
+* git log - to review history of commits - see what has happened in the past on a project
+* fields
+	- commit id
+	- author of the commit
+	- date
+	- message
+* git help log
+* git log -n    : to limit number of commits it returns
+* git log --since=  --until= : specify time period commits took place, individually or together
+* git log --author=	     : limit to the author field, part or full name
+* git log --grep             : search git message field
+
+
+Help
+----
+* git installs man pages
+
+Video 04 Git Concepts and Architectures
+=======================================
+* Three tree architecture : trees because each represents a file structure
+* repository + staging index + working directory
+* git add to move file from working to staging index
+* git commit to move file from staging index to repository
+* note can commit from working directory to repository
+* allows building change sets in staging index
+
+Git Workflow
+------------
+* new file - file.txt (v1) added to working directory
+* file.txt (v1) added to staging index
+* file.txt (v1) committed to repository  - with commit message + creating snapshot A
+* edit file.txt (v2) 
+* file.txt (v2) added to staging area
+* file.txt (v2) committed to repository  - with commit message + creating snapshot B
+* edit file.txt (v3) 
+* file.txt (v3) added to staging area
+* file.txt (v3) committed to repository  - with commit message + creating snapshot C
+* git log would show us the changes A,B &c made over time but git doesnt refer to these changes it uses another way to refer these changes made over time
+
+Hash Values (SHA-1)
+-------------------
+* referring to commits
+* change sets more often than not refer to multiple files
+* git generates a checksum for each change set ( checksum algorithms convert data into a simple number )
+* same data always equals same checksum - data changes different checksum generated
+* data integrity is fundamental 
+* git uses sha-1 hash algorithn to create checksums
+* 40 character hexadecimal string (0-9, a-f)
+* can see in git log command as field labelled commit
+* attaches metadata to each snapshot 
+	- checksum + parents checksum + author + message
+* series of commits are linked together using the checksum
+* using the sha-1 values to refer to commits
+
+The HEAD pointer
+----------------
+* git maintains a reference variable called HEAD
+* points to a specific commit in the repository as commits are made its going to point to new commit
+* pointer to "tip" of current branch in repository
+* last state of repository, what was last checked out
+* points to parent of next commit - where writing commits takes place
+* git can create new branches - seperatr from master branch - HEAD moves to new branch - if checkout master branch  Head switch to the master branch
+* change to .git folder and see a file called HEAD - what git uses to know what the HEAD is currently pointing to
+* cat HEAD see it refers to a file in the refs directory ie refs/heads/master (doesnt point to a commit but points to a branch but that current branch has a tip which is maintianed in the refs folder)
+* cat refs/heads/master which contain the current commit been pointed to 
+* can see by comparing the git log and the refs/heads file
+
+Video 05 How to make changes to the files
+=========================================
+* git status reports back to us the diffence between the working directory the staging directory and the repository, the three trees
+* identifies the branch currently working on 
+* if reports "nothing to commit (working directory clean) - theres nothing in the staging directory the working directory exactly matches the repository
+* create a new second file and a new third file
+* git stauts shows an untracked files section with the new files and instructions on how to add the files: git add
+* should have autocomplete with file names
+* git status  = another section now present  - Changes to be commited - do commit
+* git commit - m     adds with a message
+* shows info about what changed
+* "changes  not staged for commit" with instructions on how to commit and checkout
+* for greater detail on what has actually been changed
+* git uses diff to show greater detail on what has actually been changed: git diff
+* git diff shows what the lastest commit and whats in the working directory
+* numbers with the - is the repository and + is the new version
+* learn to use text editor facility to display line numbers
+* specifying file name limits changes to a single file
+* to see changes in the staging index use git diff --staged | in versions before V1.6 was called --cached
+
+How to delete files and track deletion
+--------------------------------------
+* delete untracked files no biggee 
+* here to talk about deleting from the repo, tracked files
+* when just take tracked file and use os to delete a file: "Changes not staged for commit:" deleted filename
+* git rm <file name>
+* now need to commit this change and will now longer appear
+* if directly use git rm in one step both eliminated the file and added to staging vs 2 step process
+
+How to move and rename files
+----------------------------
+* again 2 ways to do it
+* go into os and do then go back into git and tell it stage those changes
+* git will see a deleted file and a new untracked file: git add untracked file and then git rm dleted file
+* git now sees its been renamed ( as along as 50% of the data the same)
+* second way tell git and let git handle the os 
+* git mv  file_from file_to
+* git now sees renamed
+* both for deleting and renaming easier to have git handle it
+* move and rename are synomous
+
+Video 06 How to Use git with a Real Project
+===========================================
+
+
+Video 07 Undoing Changes
+========================
+* How to undo changes you made using git
+
+Changes made in working directory
+---------------------------------
+* want the repository version back, the version saved by git into the repository
+* check it out and replacing what i have in the working directory with repository version
+* git checkout <filename>
+* note checkout is also used for branches, if named thing is branch brings the branch down,
+* to prevent happening use git checkout -- <filename>,  -- indicates a file
+
+Changes in staging index - unstage things that have been staged
+---------------------------------------------------------------
+* dont wont to lose the change, the change will still be in the working directory
+* use case is when building a change set and incorrectly add a file to the staging index
+* git reset HEAD <filename>
+
+amending commits
+----------------
+* undoing commits is a lot trickier
+* given the use of hash values to guarantee the snapshot and the meta data hasnt been changed, git doesnt want to do that
+* a change would flow thru the chain of commits
+* but can change the last commit as nothing points to it but it points back
+* change substance of the commit  git commit -ammend -m 
+* just change the commit message  git commit -ammend -m
+* can only amend the most recent commit
+
+Change older commits
+--------------------
+* best advice is to make new commits, commits that undo what was done in those older commits
+* record mistake made and then fix that was made
+* checkout old version of a file
+* only need part of sha-1 : first 10 chars
+* git checkout 198d123603a34 -- <filename> : will go into the staging index
+* in message mention the sha-1 which it is reversing
+
+Undo the changes for a commit completely and totally
+----------------------------------------------------
+* git revert - does a complete opposite of the changes
+* a mirror image of the commit
+* git revert <sha-1>
+* works well when simple change from A to B and switch back from B to A
+* when more complex harder to make a mirror image, git uses a more complex set of rules (merging rules),
+* merge between the current branch and the new set of changes you are trying to merge into it
+
+Using reset to undo many commits
+--------------------------------
+* powerful and dangerous tool, extreme caution
+* git reset : change where the head pointer is pointing
+* three different options to control the command, soft, mixed and hard
+* git reset --soft  : does not change the staging index or working directory : safest of all the options
+* git reset --mixed : default, changes staging index to match the repository, doesnt change the working directory
+* git reset --hard  : changes staging index and working directory to match repository
+* take copy of log command because may need it when changes to commit the log will change
+
+Remove untracked file from working directory
+--------------------------------------------
+* quick and easy way git clean -n : do a test run
+* git clean -f  : force removal
+* destructively throw away files, not recoverable, permanently removed
+
+Video 08 Ignoring files
+=======================
+
+
+Video 09 Navigating the Commit Tree
+===================================
+
+
+Video 10 Branching
+==================
+
+
+Video 11 Merging Branches
+=========================
+
+
+Video 12 Stashing Changes
+=========================
+
+
+Video 13 Remotes
+================
+
+
+Video 14 Tools and Next Steps
+=============================
+
+
+
