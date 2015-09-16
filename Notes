@@ -316,5 +316,47 @@ ignoring tracked files
 * tracks the directories it takes to get to files
 * ignores directories with no files
 * if want to track an empty directory it must have a small file. convention create a file .gitkeep doesnt even 
+* have to have content ie touch assets/pdfs/.gitkeep
 
-have to have content ie touch assets/pdfs/.gitkeep
+Video 09 Navigating the Commit Tree
+===================================
+* ways of referencing commits
+* tree-ish - something that references part of the tree - is in the documentation
+* tree-ish - something that references a commit 
+* full sha-1 hash
+* short sha-1 hash - a least 4 chars (small project), unambiguous 8-10 characters (medium project), 12-15 chars large project
+* HEAD pointer
+* branch reference, tag reference
+* ancestory ie parent commit - HEAD^, acf7564^, master^, HEAD~1, HEAD~
+* grandparent commit - HEAD^^, acf7564^^, master^^, HEAD~2
+* great grandparent commit - HEAD^^^, acf7564^^^, master^^^, HEAD~3
+* git ls-tree      | list the contents of a tree object, thing linux ls
+* git ls-tree HEAD,  git ls-tree master
+* tree is a directory and blob is a file
+
+Get more from the commit log
+----------------------------
+* see git help pages for log
+* git log --oneline,  git log --oneline -5, git log --since="2015-06-06"
+* lot of flexibility with time formats 2.days,   3.weeks
+* grep messages git log --grep="temp"
+* range of commits
+* what happens with a file git log ccddf <filename>
+* patch option to see what changed git log -p <filename>
+* stat and summary
+* git log --format=oneline	also short, email, longer, graph
+
+Looking at a specific commit - what was it all about
+----------------------------------------------------
+* git show <sha-1>
+* git help show
+
+Compare commits
+---------------
+* comparing the directory that that commit references, the state of all the files in the repository at that time
+* comparing two directories and see what has changed between them
+* use diff to achieve this
+* between two commits
+* use .. to specify range of commits
+* see diff documentation
+
