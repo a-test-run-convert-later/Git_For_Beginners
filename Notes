@@ -360,3 +360,58 @@ Compare commits
 * use .. to specify range of commits
 * see diff documentation
 
+Video 10 Branching
+==================
+* one of the most powerful features in git, very easy to use
+* branches are cheap, processor power, storage, quick, easy to work with,
+* allow try new ideas
+* create new branch - try new idea- doesnt work then remove branch. Not tainted time line
+* isolate features or sections of work
+* one working directory
+* when change branches git does fast context switching, swap files to match branch
+
+Create a branch
+---------------
+* to get a listing of branches git branch
+* asterick identifies "currently checked out branch" aka "current branch"
+* create new branch git branch <branchname>
+
+Switching to a branch - Checking out the branch
+-----------------------------------------------
+* git checkout <branchname>
+* to create and switch branch at same time : git checkout -b <branchname>
+* branches need meaningful names
+* branch is made from the current branch, not the master or any other branch
+* git log --graph --oneline --decorate --all
+* working directory must be mostly clean or git wont allow the switch, could lose work
+* three options
+	1. scrap the changes by checking out the file again
+	2. commmit the changes to the current branch
+	3. stash the changes
+* clean enough that there are no conflicts, lose data
+
+Comparing branches
+------------------
+* git diff <branchname1>..<branchname2>
+* the order of the branches does matter, 
+* which one you want to be the old state and which one you want to be the new state
+* see the --color-words option to arrange side by side for clarity
+* remember a branch is a treeish
+* find out if one branch completely contains another branch, everything merged in it has been merged into the 
+
+current branch
+* git branch --merged   | all branches that are completely included in this branch
+
+Renaming branches
+-----------------
+* git branch -m <branchname> <newbranchname>
+
+Delete a branch
+---------------
+* git branch -d <branchname>
+* very careful but git does have some checks in place to prevent idiot move
+* cant delete branch currently on
+* must confirm if throwing away changes unless use -D
+* can configure command prompt to display current branch,
+* must install git completion script see video02, has function
+
