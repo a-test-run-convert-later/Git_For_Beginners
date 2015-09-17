@@ -415,3 +415,55 @@ Delete a branch
 * can configure command prompt to display current branch,
 * must install git completion script see video02, has function
 
+Video 11 Merging Branches
+=========================
+* merging code
+* checkout receiver branch
+* git merge <sendingbranch> and done in simplest case
+* merges can get complicated so always ensure you have a clean working directory, no uncommitted changes.
+
+fast-forward merges vs real merges
+----------------------------------
+* when no changes made to the master prior to merge with the branch the system does a fast merge. msg "Fast 
+
+forward displayed in output for operation
+* when merging git goes to do a merge it takes the thing your merging in and starts at the end of it and looks 
+
+back at all the ancestors, all the way to the beginning, along the way it looks to see if it has the head pointer 
+
+of the current master branch, if it sees the head it knows it can do a fast-forward merge and thus move it in and 
+
+have the head point to it, no need to make a new commit
+* options related to fast forward | git merge --no-ff branch .  make a commit anyway so have custom msg
+* git merge --ff-only branch  | only do the merge if you can do a fast-forward
+* a true merge aka non fast forward merge
+
+merge conflicts
+---------------
+* when changes to the same line or set of lines, git cant decide 
+* resolving merge conflicts, user actions not git
+* Where there is a conflict using the git merge command, output includes the work CONFLICT and identifying the 
+
+file with a message advising the automatic merge failed
+* status command comes with a new section Unmerged paths
+* git actually edits the docs identifying the problems
+* conflicts use the symbols <<<<<<<< , =========, >>>>>>>>>
+* do search to locate then edit
+* git log --graph -online --all --decorate provides an visual guide to the branching and merging
+* git mergetool --tool=      see help git mergetool   edit config file to set permanent merge tool to use
+
+resolving merge conflicts
+-------------------------
+* 3 options
+	- abort merge				git merge --abort
+	- resolve the conflicts manuall
+	- use a merge tool
+* resolve conflicts by hand then add and commit result
+
+strategies to reduce conflicts
+------------------------------
+* keep lines short
+* keep commits small and focused
+* beware stray edits to whitespace - spaces, tabs, line returns
+* merge often, a branch doesnt have to be finished with after a merge, work can continue and remerged
+* track changes to master | can merge master into branch so they dont get to far out of sync, known as tracking
